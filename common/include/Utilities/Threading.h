@@ -399,17 +399,17 @@ namespace Threading
 		ScopedLockBool(Mutex& mutexToLock, std::atomic<bool>& isLockedBool)
 			: m_lock(mutexToLock),
 			  m_bool(isLockedBool) {
-			m_bool = m_lock.IsLocked();
+			m_bool.store(m_lock.IsLocked(), std::memory_order_release);
 		}
 		virtual ~ScopedLockBool() throw() {
-			m_bool = false;
+			m_bool.store(false, std::memory_order_release);
 		}
 		void Acquire() {
 			m_lock.Acquire();
-			m_bool = m_lock.IsLocked();
+			m_bool.store(m_lock.IsLocked(), std::memory_order_release);
 		}
 		void Release() {
-			m_bool = false;
+			m_bool.store(false, std::memory_order_release);
 			m_lock.Release();
 		}
 	};
