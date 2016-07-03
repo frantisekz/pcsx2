@@ -32,7 +32,7 @@ class VU_Thread : public pxThread {
 	__aligned(4) u32 buffer[buffer_size];
 	__aligned(4) std::atomic<int> read_pos; // Only modified by VU thread
 	__aligned(4) std::atomic<bool> isBusy;   // Is thread processing data?
-	__aligned(4) s32  write_pos;    // Only modified by EE thread
+	__aligned(4) std::atomic<int> write_pos;    // Only modified by EE thread
 	__aligned(4) s32  write_offset; // Only modified by EE thread
 	__aligned(4) Mutex     mtxBusy;
 	__aligned(4) Semaphore semaEvent;
