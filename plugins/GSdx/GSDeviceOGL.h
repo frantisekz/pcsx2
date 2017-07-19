@@ -158,7 +158,8 @@ public:
 		{
 			struct
 			{
-				uint32 _free:32;
+				uint32 int_fst:1;
+				uint32 _free:31;
 			};
 
 			uint32 key;
@@ -473,7 +474,7 @@ public:
 		GLuint timer() { return timer_query[last_query]; }
 	} m_profiler;
 
-	GLuint m_vs[1];
+	GLuint m_vs[1<<1];
 	GLuint m_gs[1<<3];
 	GLuint m_ps_ss[1<<7];
 	GSDepthStencilOGL* m_om_dss[1<<5];
@@ -523,7 +524,7 @@ public:
 	bool Create(const std::shared_ptr<GSWnd> &wnd);
 	bool Reset(int w, int h);
 	void Flip();
-	void SetVSync(bool enable);
+	void SetVSync(int vsync);
 
 	void DrawPrimitive() final;
 	void DrawPrimitive(int offset, int count);
